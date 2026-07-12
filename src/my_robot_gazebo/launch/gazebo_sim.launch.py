@@ -25,7 +25,7 @@ def generate_launch_description():
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description': robot_description}]
+        parameters=[{'robot_description': robot_description, 'use_sim_time': True}]
     )
 
     spawn_robot = Node(
@@ -42,7 +42,17 @@ def generate_launch_description():
             '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',
             '/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry',
             '/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
+            '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
+            '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
         ],
+       output='screen'
+    )
+
+
+    static_tf_bridge = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0.1', '0', '0.08', '0', '0', '0', 'base_link', 'my_robot/base_link/lidar'],
         output='screen'
     )
 
@@ -51,4 +61,5 @@ def generate_launch_description():
         robot_state_publisher,
         spawn_robot,
         bridge,
+        static_tf_bridge,
     ])

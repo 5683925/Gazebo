@@ -116,11 +116,65 @@
       <odom_publish_frequency>30</odom_publish_frequency>
       <topic>cmd_vel</topic>
       <odom_topic>odom</odom_topic>
+      <tf_topic>tf</tf_topic>
       <frame_id>odom</frame_id>
       <child_frame_id>base_link</child_frame_id>
     </plugin>
     <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
     </plugin>
+  </gazebo>
+
+<!-- 激光雷达link -->
+  <link name="lidar_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="0.05"/>
+      </geometry>
+      <material name="red">
+        <color rgba="0.8 0.1 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0.1 0 0.08" rpy="0 0 0"/>
+  </joint>
+
+  <!-- 激光雷达Gazebo传感器插件 -->
+  <gazebo reference="lidar_link">
+    <sensor name="lidar" type="gpu_lidar">
+      <pose>0 0 0 0 0 0</pose>
+      <topic>scan</topic>
+      <update_rate>10</update_rate>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.12</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </lidar>
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+    </sensor>
   </gazebo>
 
 </robot>

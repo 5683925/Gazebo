@@ -7,8 +7,8 @@
 - Gazebo Sim (ros-humble-ros-gz)
 
 3.安装
-git clone https://github.com/你的用户名/仓库名.git
-cd 仓库名
+git clone https://github.com/5683925/Gazebo.git
+cd Gazebo
 colcon build
 source install/setup.bash
 

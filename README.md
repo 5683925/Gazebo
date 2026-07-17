@@ -57,6 +57,6 @@ ros2 topic pub /cmd_vel geometry_msgs/msg/Twist ...
 安装 ros-humble-teleop-twist-keyboard，用 i/j/k/l 按键控制机器人移动。
 
 
-
+8.其他问题：地图不准确，太多伪障碍黑点
 
 
